@@ -1,9 +1,9 @@
 = Salut
 
-Description goes here.
+Salut is just a little bit of example code of using Bonjour with MacRuby.
 
 == Contributing to Salut
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
