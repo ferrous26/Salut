@@ -6,6 +6,22 @@ Salut is just a little bit of example code of using Bonjour with MacRuby.
 Of course, this is not a substitute for reading the Bonjour overview (not even close).
 
 
+Examples
+========
+
+Advertising a hypothetical service:
+
+            service = Salut::Advertiser.new
+            service.service_type  = '_http._tcp.'
+            service.instance_name = 'My Web Service'
+            service.port          = 3000
+            service.start_advertising
+
+If you want to stop advertising:
+
+            service.stop_advertising
+
+
 Contributing to Salut
 =====================
 
