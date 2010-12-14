@@ -3,6 +3,9 @@ Salut
 
 Salut is just a little bit of example code of using Bonjour with MacRuby.
 
+Of course, this is not a substitute for reading the Bonjour overview (not even close).
+
+
 Contributing to Salut
 =====================
 
