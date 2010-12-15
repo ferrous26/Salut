@@ -90,4 +90,63 @@ class Advertiser
   end
 end
 
+# Browses the local network for other MCTestHarness instances and
+# maintains a list of all the services it finds. Uses Bonjour to
+# do the heavy lifting.
+class Browser
+
+  def initialize
+    @browser = NSNetServiceBrowser.new
+    @browser.scheduleInRunLoop NSRunLoop.currentRunLoop, forMode:NSDefaultRunLoopMode
+    @browser.delegate = self
+  end
+
+  def populate_browsable_domains
+    @browser.searchForBrowsableDomains
+  end
+
+  # @param [String] service_name
+  # @param [String] domain_name
+  def find_service service_name, in_domain:domain_name
+    @browser.searchForServiceOfType service_name, inDomain:domain_name
+  end
+
+  ### delegates
+
+  # @return [nil]
+  def netServiceBrowser sender, didFindDomain:domain_name, moreComing:more
+    NSLog("Found domain: #{domain_name}")
+  end
+
+  # @return [nil]
+  def netServiceBrowser sender, didRemoveDomain:domain_name, moreComing:more
+    NSLog("Removing domain: #{domain_name}")
+  end
+
+  # @return [nil]
+  def netServiceBrowser sender, didFindService:service, moreComing:more
+    NSLog("Found service (#{service.description})")
+  end
+
+  # @return [nil]
+  def netServiceBrowser sender, didRemoveService:service, moreComing:more
+    NSLog("Removing service (#{service.description})")
+  end
+
+  # @return [nil]
+  def netServiceBrowserWillSearch sender
+    NSLog("Starting search (#{sender.description})")
+  end
+
+  # @return [nil]
+  def netServiceBrowser sender, didNotSearch:error_dict
+    NSLog("Failed to search (#{sender.description})\n\t problem was\n#{error_dict.description}")
+  end
+
+  # @return [nil]
+  def netServiceBrowserDidStopSearch sender
+    NSLog("Done searching (#{sender.description})")
+  end
+end
+
 end
