@@ -21,6 +21,13 @@ If you want to stop advertising:
 
             service.stop_advertising
 
+You might notice that you aren't seeing the results of the callbacks, this is because
+they are waiting for the current run loop to cycle. This would happen automatically with
+a GUI app, but a command line app will have to force the loop to run.
+
+           NSRunLoop.currentRunLoop.run  # => runs indefinitely
+           NSRunLoop.currentRunLoop.runUntiDate (Time.now + 5)  # => runs for 5 seconds
+
 
 Contributing to Salut
 =====================
