@@ -37,50 +37,50 @@ class Advertiser
 
   # @return [nil]
   def netServiceWillPublish sender
-    NSLog("Starting to advertise service #{sender.description}")
+    NSLog("Starting to advertise service (#{sender.description})")
   end
 
   # @param [Hash] error_dict
   # @return [nil]
   def netService sender, didNotPublish:error_dict
-    NSLog("ERROR: could not advertise service #{sender.description}\n\t the problem was\n #{error_dict.description}")
+    NSLog("ERROR: could not advertise service (#{sender.description})\n\t the problem was\n#{error_dict.description}")
   end
 
   # @return [nil]
   def netServiceDidPublish sender
-    NSLog("Successfully advertising service #{sender.description}")
+    NSLog("Successfully advertising service (#{sender.description})")
   end
 
   # @return [nil]
   def netServiceWillResolve sender
-    NSLog("Resolving service: #{sender.description}")
+    NSLog("Resolving service (#{sender.description})")
   end
 
   # @param [Hash] error_dict
   # @return [nil]
   def netService sender, didNotResolve:error_dict
-    NSLog("ERROR: could not resolve service #{sender.description}\n\t the problem was\n #{error_dict.description}")
+    NSLog("ERROR: could not resolve service (#{sender.description})\n\t the problem was\n#{error_dict.description}")
   end
 
   # @return [nil]
   def netServiceDidResolveAddress sender
-    NSLog("Resolved address for service #{sender.description}")
+    NSLog("Resolved address for service (#{sender.description})")
   end
 
   # @param [NSData] data the new TXT record
   # @return [nil]
   def netService sender, didUpdateTXTRecordData:data
-    NSLog("Updated TXT record for service #{sender.description}")
+    NSLog("Updated TXT record for service (#{sender.description})")
   end
 
   # @return [nil]
   def netServiceDidStop sender
-    NSLog("Stopping the advertisement for service #{sender.description}")
+    NSLog("Stopping the advertisement for service (#{sender.description})")
   end
 
   # @return [nil]
   def netServiceDidStop sender
-    NSLog("Stopped advertising service #{sender.description}")
+    NSLog("Stopped advertising service (#{sender.description})")
   end
 end
 
