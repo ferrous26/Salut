@@ -26,6 +26,11 @@ class Advertiser
     @service.publish
   end
 
+  # @param [Float] timeout number of seconds to wait before timing out
+  def resolve timeout = 60.0
+    @service.resolveWithTimeout timeout
+  end
+
   # @return [NSNetService] the service that just stopped advertising
   def stop_advertising
     @service.stop
