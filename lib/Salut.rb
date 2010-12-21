@@ -81,11 +81,6 @@ class Advertiser
 
   # @return [nil]
   def netServiceDidStop sender
-    NSLog("Stopping the advertisement for service (#{sender.description})")
-  end
-
-  # @return [nil]
-  def netServiceDidStop sender
     NSLog("Stopped advertising service (#{sender.description})")
   end
 end
