@@ -37,7 +37,6 @@ class Advertiser
                                             name:@instance_name,
                                             port:@port
     @service.delegate = self
-    @service.scheduleInRunLoop NSRunLoop.currentRunLoop, forMode:NSDefaultRunLoopMode
     @service.publish
   end
 
@@ -107,7 +106,6 @@ class Browser
 
   def initialize
     @browser = NSNetServiceBrowser.new
-    @browser.scheduleInRunLoop NSRunLoop.currentRunLoop, forMode:NSDefaultRunLoopMode
     @browser.delegate = self
   end
 
