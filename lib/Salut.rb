@@ -105,6 +105,14 @@ end
 # Browses the local network for other MCTestHarness instances and
 # maintains a list of all the services it finds. Uses Bonjour to
 # do the heavy lifting.
+#
+# You should be careful not to reuse the same instance for multiple
+# searches without calling #stop, you are likely to get an error
+# logged. The reason for this is that a browser never really stops
+# searching (unless you call #stop), even if moreComing is false;
+# moreComing is more of a signal that the browser up to date on
+# the network state for the moment but network state changes will
+# trigger the callback.
 class Browser
 
   # @return [Array<String>]
@@ -129,6 +137,10 @@ class Browser
   # @param [String] domain_name
   def find_service service_name, in_domain:domain_name
     @browser.searchForServiceOfType service_name, inDomain:domain_name
+
+  # @return [nil]
+  def stop_searching
+    @browser.stop
   end
 
 
