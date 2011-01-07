@@ -29,6 +29,11 @@ a GUI app, but a command line app will have to force the loop to run.
            NSRunLoop.currentRunLoop.runUntiDate (Time.now + 5)  # => runs for 5 seconds
 
 
+TODO
+====
+
+* Allow overriding any of the callback implementations with a proc
+
 Contributing to Salut
 =====================
 
