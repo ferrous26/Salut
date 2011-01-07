@@ -11,10 +11,11 @@ Examples
 
 Advertising a hypothetical service:
 
-            service = Salut::Advertiser.new
-            service.service_type  = '_http._tcp.'
-            service.instance_name = 'My Web Service'
-            service.port          = 3000
+            service = Salut::Advertiser.new({
+              service_type:'_http._tcp.',
+              instance_name:'Test',
+              port:3000
+            })
             service.start_advertising
 
 If you want to stop advertising:
@@ -27,7 +28,6 @@ a GUI app, but a command line app will have to force the loop to run.
 
            NSRunLoop.currentRunLoop.run  # => runs indefinitely
            NSRunLoop.currentRunLoop.runUntiDate (Time.now + 5)  # => runs for 5 seconds
-
 
 TODO
 ====

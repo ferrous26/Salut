@@ -15,6 +15,20 @@ class Advertiser
   # @return [Fixnum] port
   attr_accessor :port
 
+  # @example Initializing with a hash
+  #  service = Advertiser.new({
+  #    service_type:'_http._tcp.',
+  #    instance_name:'Test',
+  #    port:3000
+  #  })
+  # @param [Hash{Symbol=>String,Fixnum}] params key-value pairs specifying the
+  #  type, name, and port for the service
+  def initialize params = {}
+    @service_type  = params[:service_type]
+    @instance_name = params[:instance_name]
+    @port          = params[:port]
+  end
+
   # Create a new NSNetService instance and publish to the local network.
   # @return [NSNetService] the service that began advertising
   def start_advertising
@@ -84,6 +98,7 @@ class Advertiser
     NSLog("Stopped advertising service (#{sender.description})")
   end
 end
+
 
 # Browses the local network for other MCTestHarness instances and
 # maintains a list of all the services it finds. Uses Bonjour to
