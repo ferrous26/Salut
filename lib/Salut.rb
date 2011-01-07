@@ -135,8 +135,9 @@ class Browser
 
   # @param [String] service_name
   # @param [String] domain_name
-  def find_service service_name, in_domain:domain_name
-    @browser.searchForServiceOfType service_name, inDomain:domain_name
+  def find_services service_name, in_domain:domain_name
+    @browser.searchForServicesOfType service_name, inDomain:domain_name
+  end
 
   # @return [nil]
   def stop_searching
