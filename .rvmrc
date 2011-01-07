@@ -1,1 +1,2 @@
-rvm use macruby-nightly
+rvm use macruby-nightly@Salut --create
+
