@@ -120,7 +120,8 @@ class Browser
     @services = []
   end
 
-  def populate_browsable_domains
+  # @return [nil]
+  def find_browsable_domains
     @browser.searchForBrowsableDomains
   end
 
