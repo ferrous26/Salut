@@ -15,6 +15,9 @@ class Advertiser
   # @return [Fixnum] port
   attr_accessor :port
 
+  # @return [NSNetService]
+  attr_reader :service
+
   # @example Initializing with a hash
   #  service = Advertiser.new({
   #    service_type:'_http._tcp.',
