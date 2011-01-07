@@ -107,9 +107,17 @@ end
 # do the heavy lifting.
 class Browser
 
+  # @return [Array<String>]
+  attr_reader :domains
+
+  # @return [Array<NSNetService>]
+  attr_reader :services
+
   def initialize
-    @browser = NSNetServiceBrowser.new
+    @browser  = NSNetServiceBrowser.new
     @browser.delegate = self
+    @domains  = []
+    @services = []
   end
 
   def populate_browsable_domains
@@ -122,25 +130,30 @@ class Browser
     @browser.searchForServiceOfType service_name, inDomain:domain_name
   end
 
+
   ### delegates
 
   # @return [nil]
   def netServiceBrowser sender, didFindDomain:domain_name, moreComing:more
+    @domains << domain_name
     NSLog("Found domain: #{domain_name}")
   end
 
   # @return [nil]
   def netServiceBrowser sender, didRemoveDomain:domain_name, moreComing:more
+    @domains.delete domain_name
     NSLog("Removing domain: #{domain_name}")
   end
 
   # @return [nil]
   def netServiceBrowser sender, didFindService:service, moreComing:more
+    @services << service
     NSLog("Found service (#{service.description})")
   end
 
   # @return [nil]
   def netServiceBrowser sender, didRemoveService:service, moreComing:more
+    @services.delete service
     NSLog("Removing service (#{service.description})")
   end
 
