@@ -34,7 +34,7 @@ class Service
     @delegates[key] = value
   end
 
-  # @example Initializing with a hash
+  # @example Initializing with properties
   #  service = Advertiser.new({
   #    service_type:'_http._tcp.',
   #    instance_name:'Test',
@@ -74,51 +74,60 @@ class Service
 
   ### delegate methods
 
+  # @yieldparam [NSNetService] sender
   # @return [nil]
   def netServiceWillPublish sender
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Starting to advertise service (#{sender.description})")
   end
 
-  # @param [Hash] error_dict
+  # @yieldparam [NSNetService] sender
+  # @yieldparam [Hash] error_dict
   # @return [nil]
   def netService sender, didNotPublish:error_dict
     @delegates[__method__].call sender, error_dict if @delegates[__method__]
     NSLog("ERROR: could not advertise service (#{sender.description})\n\t the problem was\n#{error_dict.description}")
   end
 
+  # @yieldparam [NSNetService] sender
   # @return [nil]
   def netServiceDidPublish sender
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Successfully advertising service (#{sender.description})")
   end
 
+  # @yieldparam [NSNetService] sender
   # @return [nil]
   def netServiceWillResolve sender
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Resolving service (#{sender.description})")
   end
 
-  # @param [Hash] error_dict
+  # @yieldparam [NSNetService] sender
+  # @yieldparam [Hash] error_dict
   # @return [nil]
   def netService sender, didNotResolve:error_dict
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("ERROR: could not resolve service (#{sender.description})\n\t the problem was\n#{error_dict.description}")
   end
 
+  # @yieldparam [NSNetService] sender
   # @return [nil]
   def netServiceDidResolveAddress sender
+    # @todo fill out local variables
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Resolved address for service (#{sender.description})")
   end
 
-  # @param [NSData] data the new TXT record
+  # @yieldparam [NSNetService] sender
+  # @yieldparam [NSData] data the new TXT record
   # @return [nil]
   def netService sender, didUpdateTXTRecordData:data
     @delegates[__method__].call sender, data if @delegates[__method__]
     NSLog("Updated TXT record for service (#{sender.description})")
   end
 
+  # @yieldparam [NSNetService] sender
   # @return [nil]
   def netServiceDidStop sender
     @delegates[__method__].call sender if @delegates[__method__]
@@ -189,6 +198,9 @@ class Browser
 
   ### delegates
 
+  # @yieldparam [NSNetServiceBrowser] sender
+  # @yieldparam [String] domain_name
+  # @yieldparam [Boolean] more
   # @return [nil]
   def netServiceBrowser sender, didFindDomain:domain_name, moreComing:more
     @domains << domain_name
@@ -196,6 +208,9 @@ class Browser
     NSLog("Found domain: #{domain_name}")
   end
 
+  # @yieldparam [NSNetServiceBrowser] sender
+  # @yieldparam [String] domain_name
+  # @yieldparam [Boolean] more
   # @return [nil]
   def netServiceBrowser sender, didRemoveDomain:domain_name, moreComing:more
     @domains.delete domain_name
@@ -203,6 +218,9 @@ class Browser
     NSLog("Removing domain: #{domain_name}")
   end
 
+  # @yieldparam [NSNetServiceBrowser] sender
+  # @yieldparam [Salut::Service] service
+  # @yieldparam [Boolean] more
   # @return [nil]
   def netServiceBrowser sender, didFindService:service, moreComing:more
     @services << service
@@ -211,6 +229,9 @@ class Browser
     NSLog("Found service (#{service.description})")
   end
 
+  # @yieldparam [NSNetServiceBrowser] sender
+  # @yieldparam [Salut::Service] service
+  # @yieldparam [Boolean] more
   # @return [nil]
   def netServiceBrowser sender, didRemoveService:service, moreComing:more
     @services.delete service
@@ -218,18 +239,22 @@ class Browser
     NSLog("Removing service (#{service.description})")
   end
 
+  # @yieldparam [NSNetServiceBrowser] sender
   # @return [nil]
   def netServiceBrowserWillSearch sender
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Starting search (#{sender.description})")
   end
 
+  # @yieldparam [NSNetServiceBrowser] sender
+  # @yieldparam [Hash] error_dict
   # @return [nil]
   def netServiceBrowser sender, didNotSearch:error_dict
     @delegates[__method__].call sender, error_dict if @delegates[__method__]
     NSLog("Failed to search (#{sender.description})\n\t problem was\n#{error_dict.description}")
   end
 
+  # @yieldparam [NSNetServiceBrowser] sender
   # @return [nil]
   def netServiceBrowserDidStopSearch sender
     @delegates[__method__].call sender if @delegates[__method__]

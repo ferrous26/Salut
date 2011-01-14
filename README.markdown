@@ -13,7 +13,7 @@ Advertising a hypothetical service:
 
             service = Salut::Service.new({
               service_type:'_http._tcp.',
-              instance_name:'Test',
+              instance_name:`hostname s`.chomp,
               port:3000
             })
             service.start_advertising
@@ -24,6 +24,7 @@ Finding the service using the browser:
             # look at the delegate methods to find out what variables are given to the proc
             browser.delegates[:'netServiceBrowser:didFindService:moreComing:'] = Proc.new {
                 |sender, service, more|
+                service.resolve # because we want to resolve them all!
                 if more
                    NSLog('Not up to date yet')
                 else
