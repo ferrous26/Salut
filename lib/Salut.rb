@@ -4,7 +4,7 @@ framework 'Foundation'
 module Salut
 
 # Advertises its service on the local network using Bonjour.
-class Advertiser
+class Service
 
   # @return [String] service_type
   attr_accessor :service_type

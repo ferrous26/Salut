@@ -11,7 +11,7 @@ Examples
 
 Advertising a hypothetical service:
 
-            service = Salut::Advertiser.new({
+            service = Salut::Service.new({
               service_type:'_http._tcp.',
               instance_name:'Test',
               port:3000
