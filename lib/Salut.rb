@@ -223,9 +223,10 @@ class Browser
   # @yieldparam [Boolean] more
   # @return [nil]
   def netServiceBrowser sender, didFindService:service, moreComing:more
-    @services << service
     puts __method__
-    @delegates[__method__].call sender, service, more if @delegates[__method__]
+    salut_service = Service.new({ service:service })
+    @services << salut_service
+    @delegates[__method__].call sender, salut_service, more if @delegates[__method__]
     NSLog("Found service (#{service.description})")
   end
 
@@ -234,8 +235,14 @@ class Browser
   # @yieldparam [Boolean] more
   # @return [nil]
   def netServiceBrowser sender, didRemoveService:service, moreComing:more
-    @services.delete service
-    @delegates[__method__].call sender, service, more if @delegates[__method__]
+    ousted_service = nil
+    @services.delete_if { |salut_service|
+      if salut_service.service == service
+        ousted_service = salut_service
+        true
+      end
+    }
+    @delegates[__method__].call sender, ousted_service, more if @delegates[__method__]
     NSLog("Removing service (#{service.description})")
   end
 
