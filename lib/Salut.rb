@@ -33,6 +33,7 @@ class Advertiser
     @service_type  = params[:service_type]
     @instance_name = params[:instance_name]
     @port          = params[:port]
+    @delegates     = {}
   end
 
   # Create a new NSNetService instance and publish to the local network.
