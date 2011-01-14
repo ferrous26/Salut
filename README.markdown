@@ -21,6 +21,15 @@ Advertising a hypothetical service:
 Finding the service using the browser:
 
             browser = Salut::Browser.new
+            # look at the delegate methods to find out what variables are given to the proc
+            browser.delegates[:'netServiceBrowser:didFindService:moreComing:'] = Proc.new {
+                |sender, service, more|
+                if more
+                   NSLog('Not up to date yet')
+                else
+                   NSLog('All caught up')
+                end
+            }
             browser.find_services '_http._tcp.', in_domain:''
 
 If you want to stop advertising:
@@ -33,11 +42,6 @@ a GUI app, but a command line app will have to force the loop to run.
 
            NSRunLoop.currentRunLoop.run  # => runs indefinitely
            NSRunLoop.currentRunLoop.runUntiDate (Time.now + 5)  # => runs for 5 seconds
-
-TODO
-====
-
-* Allow overriding any of the callback implementations with a proc
 
 Contributing to Salut
 =====================
