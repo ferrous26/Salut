@@ -21,6 +21,19 @@ class Advertiser
   # @return [Hash{Symbol=>Proc}]
   attr_accessor :delegates
 
+  # @param [Symbol] key
+  # @return [Proc]
+  def [] key
+    @delegates[key]
+  end
+
+  # @param [Symbol] key
+  # @param [Proc] value
+  # @return [Proc]
+  def []= key, value
+    @delegates[key] = value
+  end
+
   # @example Initializing with a hash
   #  service = Advertiser.new({
   #    service_type:'_http._tcp.',
@@ -135,6 +148,19 @@ class Browser
 
   # @return [Hash{Symbol=>Proc}]
   attr_accessor :delegates
+
+  # @param [Symbol] key
+  # @return [Proc]
+  def [] key
+    @delegates[key]
+  end
+
+  # @param [Symbol] key
+  # @param [Proc] value
+  # @return [Proc]
+  def []= key, value
+    @delegates[key] = value
+  end
 
   def initialize
     @browser   = NSNetServiceBrowser.new
