@@ -21,7 +21,7 @@ Advertising a hypothetical service:
 Finding the service using the browser:
 
             browser = Salut::Browser.new
-            browser.find_services '_http._tcp.', inDomain:''
+            browser.find_services '_http._tcp.', in_domain:''
 
 If you want to stop advertising:
 
