@@ -40,12 +40,20 @@ class Service
   #    instance_name:'Test',
   #    port:3000
   #  })
+  # @example Initializing with an existing service
+  #  service = Advertiser.new({
+  #    service:NSNetService.alloc.initWithDomain('',
+  #                                         type:'_http._tcp.',
+  #                                         name:`hostname -s`.chomp,
+  #                                         port:3000)
+  #  })
   # @param [Hash{Symbol=>String,Fixnum}] params key-value pairs specifying the
   #  type, name, and port for the service
   def initialize params = {}
     @service_type  = params[:service_type]
     @instance_name = params[:instance_name]
     @port          = params[:port]
+    @service       = params[:service]
     @delegates     = {}
   end
 
