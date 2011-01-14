@@ -37,8 +37,8 @@ class Advertiser
 
   # Create a new NSNetService instance and publish to the local network.
   # @return [NSNetService] the service that began advertising
-  def start_advertising
-    @service = NSNetService.alloc.initWithDomain '',
+  def start_advertising domain_name = ''
+    @service = NSNetService.alloc.initWithDomain domain_name,
                                             type:@service_type,
                                             name:@instance_name,
                                             port:@port
