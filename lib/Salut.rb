@@ -36,8 +36,7 @@ class Service
   #                                         name:`hostname -s`.chomp,
   #                                         port:3000)
   #  })
-  # @param [Hash{Symbol=>String,Fixnum}] params key-value pairs specifying the
-  #  type, name, and port for the service
+  # @param [Hash{Symbol=>(String,Fixnum,NSNetService)}] params
   def initialize params = {}
     @service_type  = params[:service_type]
     @instance_name = params[:instance_name]
