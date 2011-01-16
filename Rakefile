@@ -12,6 +12,7 @@ Jeweler::Tasks.new do |gem|
   gem.email = "marada@uwaterloo.ca"
   gem.authors = ["Mark Rada"]
   gem.add_development_dependency "yard", "~> 0.6.0"
+  gem.add_development_dependency "bluecloth", "~> 2.0.0"
   gem.add_development_dependency "jeweler", "~> 1.5.1"
 end
 Jeweler::RubygemsDotOrgTasks.new
