@@ -7,14 +7,6 @@ module Salut
 # Advertises its service on the local network using Bonjour.
 class Service
 
-  # @return [String] service_type
-  attr_accessor :service_type
-
-  # @return [String] instance_name
-  attr_accessor :instance_name
-
-  # @return [Fixnum] port
-  attr_accessor :port
   # @return [Boolean]
   attr_reader :advertising
   alias_method :advertising?, :advertising
@@ -22,14 +14,16 @@ class Service
   # @return [NSNetService]
   attr_reader :service
 
-  # @return [Hash{Symbol=>Proc}]
-  attr_accessor :delegates
+  # @return [String]
+  attr_accessor :service_type
 
   # @param [Symbol] key
   # @return [Proc]
   def [] key
     @delegates[key]
   end
+  # @return [String]
+  attr_accessor :instance_name
 
   # @param [Symbol] key
   # @param [Proc] value
@@ -37,6 +31,8 @@ class Service
   def []= key, value
     @delegates[key] = value
   end
+  # @return [Fixnum]
+  attr_accessor :port
 
   # @example Initializing with properties
   #  service = Advertiser.new({
@@ -65,6 +61,9 @@ class Service
   # @return [NSNetService] the service that began advertising
   def start_advertising domain_name = ''
     @service = NSNetService.alloc.initWithDomain domain_name,
+  # @return [Hash{Symbol=>Proc}]
+  attr_accessor :delegates
+
                                             type:@service_type,
                                             name:@instance_name,
                                             port:@port
