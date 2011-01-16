@@ -47,6 +47,13 @@ a GUI app, but a command line app will have to force the loop to run.
 You can only use a Service or Browser for one thing at a time, and the API is designed
 with that assumption in mind.
 
+TODO
+====
+
+- Monitoring and TXT record stuff
+- publishWithOptions default argument
+- Do not pass NSNetService or NSNetServiceBrowser to callbacks
+
 Contributing to Salut
 =====================
 
