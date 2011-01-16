@@ -15,6 +15,9 @@ class Service
 
   # @return [Fixnum] port
   attr_accessor :port
+  # @return [Boolean]
+  attr_reader :advertising
+  alias_method :advertising?, :advertising
 
   # @return [NSNetService]
   attr_reader :service
@@ -94,6 +97,7 @@ class Service
   # @yieldparam [Hash] error_dict
   # @return [nil]
   def netService sender, didNotPublish:error_dict
+    @advertising = false
     @delegates[__method__].call sender, error_dict if @delegates[__method__]
     NSLog("ERROR: could not advertise service (#{sender.description})\n\t the problem was\n#{error_dict.description}")
   end
@@ -101,6 +105,7 @@ class Service
   # @yieldparam [NSNetService] sender
   # @return [nil]
   def netServiceDidPublish sender
+    @advertising = true
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Successfully advertising service (#{sender.description})")
   end
@@ -139,6 +144,7 @@ class Service
   # @yieldparam [NSNetService] sender
   # @return [nil]
   def netServiceDidStop sender
+    @advertising = false
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Stopped advertising service (#{sender.description})")
   end
@@ -157,6 +163,10 @@ end
 # the network state for the moment but network state changes will
 # trigger the callback.
 class Browser
+
+  # @return [Boolean]
+  attr_reader :searching
+  alias_method :searching?, :searching
 
   # @return [Array<String>]
   attr_reader :domains
@@ -258,6 +268,7 @@ class Browser
   # @yieldparam [NSNetServiceBrowser] sender
   # @return [nil]
   def netServiceBrowserWillSearch sender
+    @searching = true
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Starting search (#{sender.description})")
   end
@@ -266,6 +277,7 @@ class Browser
   # @yieldparam [Hash] error_dict
   # @return [nil]
   def netServiceBrowser sender, didNotSearch:error_dict
+    @searching = false
     @delegates[__method__].call sender, error_dict if @delegates[__method__]
     NSLog("Failed to search (#{sender.description})\n\t problem was\n#{error_dict.description}")
   end
@@ -273,6 +285,7 @@ class Browser
   # @yieldparam [NSNetServiceBrowser] sender
   # @return [nil]
   def netServiceBrowserDidStopSearch sender
+    @searching = false
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Done searching (#{sender.description})")
   end
