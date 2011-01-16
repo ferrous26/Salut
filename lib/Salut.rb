@@ -44,6 +44,7 @@ class Service
     @port          = params[:port]
     @service       = params[:service]
     @delegates     = {}
+    @advertising   = false
   end
 
 
@@ -205,6 +206,7 @@ class Browser
     @domains          = []
     @services         = []
     @delegates        = {}
+    @searching        = false
   end
 
   # Stop searching for things, whether they be domains or services
