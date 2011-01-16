@@ -242,7 +242,6 @@ class Browser
   # @yieldparam [Boolean] more
   # @return [nil]
   def netServiceBrowser sender, didFindService:service, moreComing:more
-    puts __method__
     salut_service = Service.new({ service:service })
     @services << salut_service
     @delegates[__method__].call sender, salut_service, more if @delegates[__method__]
