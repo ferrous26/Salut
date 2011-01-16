@@ -255,8 +255,8 @@ class Browser
 
   # @param [String] service_name
   # @param [String] domain_name
-  def find_services service_name, in_domain:domain_name
-    @browser.searchForServicesOfType service_name, inDomain:domain_name
+  def find_services service_type, in_domain:domain_name
+    @browser.searchForServicesOfType service_type, inDomain:domain_name
   end
 
   alias_method :stop_finding_services, :stop_finding
