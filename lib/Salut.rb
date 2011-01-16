@@ -233,13 +233,6 @@ class Browser
     @delegates[key] = value
   end
 
-  def initialize
-    @browser   = NSNetServiceBrowser.new
-    @browser.delegate = self
-    @domains   = []
-    @services  = []
-    @delegates = {}
-  end
   # @endgroup
 
 
