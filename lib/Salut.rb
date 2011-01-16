@@ -302,14 +302,14 @@ class Browser
   # @yieldparam [Boolean] more
   # @return [nil]
   def netServiceBrowser sender, didRemoveService:service, moreComing:more
-    ousted_service = nil
+    removed_service
     @services.delete_if { |salut_service|
       if salut_service.service == service
-        ousted_service = salut_service
+        removed_service = salut_service
         true
       end
     }
-    @delegates[__method__].call sender, ousted_service, more if @delegates[__method__]
+    @delegates[__method__].call sender, removed_service, more if @delegates[__method__]
     NSLog("Removing service (#{service.description})")
   end
 
