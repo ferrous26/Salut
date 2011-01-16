@@ -246,6 +246,7 @@ class Browser
     @browser.searchForBrowsableDomains
   end
 
+  alias_method :stop_finding_domains, :stop_finding
 
   # @endgroup
 
@@ -258,10 +259,7 @@ class Browser
     @browser.searchForServicesOfType service_name, inDomain:domain_name
   end
 
-  # @return [nil]
-  def stop_searching
-    @browser.stop
-  end
+  alias_method :stop_finding_services, :stop_finding
 
   # @endgroup
 
