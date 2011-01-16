@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 framework 'Foundation'
 
+# Various modules intended to be mixed in to classes that use
 module Salut
 
 # Advertises its service on the local network using Bonjour.
