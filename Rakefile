@@ -11,6 +11,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Uses the Objective-C NetService classes to advertise and discover services on the local network}
   gem.email = "marada@uwaterloo.ca"
   gem.authors = ["Mark Rada"]
+  gem.files = ['lib/**/*.rb']
   gem.add_development_dependency "yard", "~> 0.6.0"
   gem.add_development_dependency "bluecloth", "~> 2.0.0"
   gem.add_development_dependency "jeweler", "~> 1.5.1"
