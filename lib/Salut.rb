@@ -17,20 +17,9 @@ class Service
   # @return [String]
   attr_accessor :service_type
 
-  # @param [Symbol] key
-  # @return [Proc]
-  def [] key
-    @delegates[key]
-  end
   # @return [String]
   attr_accessor :instance_name
 
-  # @param [Symbol] key
-  # @param [Proc] value
-  # @return [Proc]
-  def []= key, value
-    @delegates[key] = value
-  end
   # @return [Fixnum]
   attr_accessor :port
 
@@ -57,13 +46,38 @@ class Service
     @delegates     = {}
   end
 
-  # Create a new NSNetService instance and publish to the local network.
-  # @return [NSNetService] the service that began advertising
-  def start_advertising domain_name = ''
-    @service = NSNetService.alloc.initWithDomain domain_name,
+
+  # @group Adding callback extensions
+
   # @return [Hash{Symbol=>Proc}]
   attr_accessor :delegates
 
+  # A shortcut for reading from the delegate methods
+  # @param [Symbol] key
+  # @return [Proc]
+  def [] key
+    @delegates[key]
+  end
+
+  # A shortcut for writing to the delegate methods hash
+  # @param [Symbol] key
+  # @param [Proc] value
+  # @return [Proc]
+  def []= key, value
+    @delegates[key] = value
+  end
+
+  # @endgroup
+
+
+  # @group Advertising a service
+
+  # Start advertising the service. If you want to change the service
+  # type, instance name, or port, you will have to {#stop_advertising}
+  # first.
+  # @param [String] domain defaults to all domains
+  def start_advertising domain = ''
+    @service = NSNetService.alloc.initWithDomain domain,
                                             type:@service_type,
                                             name:@instance_name,
                                             port:@port
@@ -71,19 +85,28 @@ class Service
     @service.publish
   end
 
+  # Stop advertising the service, which is a nice thing to do when you
+  # are cleaning up before exiting your code, but the script/program
+  # exiting will also cause the service to stop being published.
+  def stop_advertising
+    @service.stop
+    @service     = nil
+  end
+
+  # @endgroup
+
+
+  # @group Working with discovered services
+
   # @param [Float] timeout number of seconds to wait before timing out
   def resolve timeout = 60.0
     @service.resolveWithTimeout timeout
   end
 
-  # @return [NSNetService] the service that just stopped advertising
-  def stop_advertising
-    @service.stop
-    @service = nil
-  end
+  # @endgroup
 
 
-  ### delegate methods
+  # @group Delegate methods
 
   # @yieldparam [NSNetService] sender
   # @return [nil]
@@ -147,6 +170,9 @@ class Service
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Stopped advertising service (#{sender.description})")
   end
+
+  # @endgroup
+
 end
 
 
@@ -172,6 +198,23 @@ class Browser
   # @return [Array<NSNetService>]
   attr_reader :services
 
+  # Ensure that some instance variables are initialized
+  def initialize
+    @browser          = NSNetServiceBrowser.alloc.init
+    @browser.delegate = self
+    @domains          = []
+    @services         = []
+    @delegates        = {}
+  end
+
+  # Stop searching for things, whether they be domains or services
+  def stop_finding
+    @browser.stop
+  end
+
+
+  # @group Adding callback extensions
+
   # @return [Hash{Symbol=>Proc}]
   attr_accessor :delegates
 
@@ -195,11 +238,21 @@ class Browser
     @services  = []
     @delegates = {}
   end
+  # @endgroup
+
+
+  # @group Finding domains
 
   # @return [nil]
   def find_browsable_domains
     @browser.searchForBrowsableDomains
   end
+
+
+  # @endgroup
+
+
+  # @group Finding services
 
   # @param [String] service_name
   # @param [String] domain_name
@@ -212,8 +265,10 @@ class Browser
     @browser.stop
   end
 
+  # @endgroup
 
-  ### delegates
+
+  # @group Delegate methods
 
   # @yieldparam [NSNetServiceBrowser] sender
   # @yieldparam [String] domain_name
@@ -286,6 +341,9 @@ class Browser
     @delegates[__method__].call sender if @delegates[__method__]
     NSLog("Done searching (#{sender.description})")
   end
+
+  # @endgroup
+
 end
 
 end
