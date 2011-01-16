@@ -44,6 +44,9 @@ a GUI app, but a command line app will have to force the loop to run.
            NSRunLoop.currentRunLoop.run  # => runs indefinitely
            NSRunLoop.currentRunLoop.runUntiDate (Time.now + 5)  # => runs for 5 seconds
 
+You can only use a Service or Browser for one thing at a time, and the API is designed
+with that assumption in mind.
+
 Contributing to Salut
 =====================
 

@@ -151,17 +151,16 @@ class Service
 end
 
 
-# Browses the local network for other MCTestHarness instances and
-# maintains a list of all the services it finds. Uses Bonjour to
-# do the heavy lifting.
+# Browsers are used for searching for services and domains. A single instance
+# should only be used for a single search.
 #
 # You should be careful not to reuse the same instance for multiple
-# searches without calling #stop, you are likely to get an error
-# logged. The reason for this is that a browser never really stops
-# searching (unless you call #stop), even if moreComing is false;
-# moreComing is more of a signal that the browser up to date on
-# the network state for the moment but network state changes will
-# trigger the callback.
+# searches without calling {#stop_searching}, otherwise you are likely to get
+# an error logged. The reason for this is that a browser never really
+# stops searching (unless you call {#stop_searching}), even if moreComing
+# is false. moreComing is a signal that the browser up to date on the network
+# state for the moment but any new network state changes will trigger the
+# callbacks again.
 class Browser
 
   # @return [Boolean]
@@ -249,7 +248,7 @@ class Browser
   end
 
   # @yieldparam [NSNetServiceBrowser] sender
-  # @yieldparam [Salut::Service] service
+  # @yieldparam [Salut::Service] removed_service
   # @yieldparam [Boolean] more
   # @return [nil]
   def netServiceBrowser sender, didRemoveService:service, moreComing:more
