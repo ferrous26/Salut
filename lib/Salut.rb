@@ -99,6 +99,7 @@ class Service
 
   # @group Working with discovered services
 
+  # A more Ruby-like #resolveWithTimeout by supporting a default argument
   # @param [Float] timeout number of seconds to wait before timing out
   def resolve timeout = 60.0
     @service.resolveWithTimeout timeout
@@ -220,12 +221,14 @@ class Browser
   # @return [Hash{Symbol=>Proc}]
   attr_accessor :delegates
 
+  # A shortcut for reading from the delegate methods
   # @param [Symbol] key
   # @return [Proc]
   def [] key
     @delegates[key]
   end
 
+  # A shortcut for writing to the delegate methods hash
   # @param [Symbol] key
   # @param [Proc] value
   # @return [Proc]
