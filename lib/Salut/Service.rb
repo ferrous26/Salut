@@ -73,6 +73,9 @@ module Salut
     # Start advertising the service. If you want to change the service
     # type, instance name, or port, you will have to {#stop_advertising}
     # first.
+    #
+    # If @service_type, @instance_name, and @port are not specified then
+    # you will get a NilClass NoMethodError.
     # @param [String] domain defaults to all domains
     def start_advertising domain = ''
       @service = NSNetService.alloc.initWithDomain domain,
