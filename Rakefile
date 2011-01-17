@@ -15,17 +15,19 @@ Jeweler::Tasks.new do |gem|
   gem.add_development_dependency "yard", "~> 0.6.0"
   gem.add_development_dependency "bluecloth", "~> 2.0.0"
   gem.add_development_dependency "jeweler", "~> 1.5.1"
+  gem.add_development_dependency "mac_bacon", "~> 1.1.21"
 end
 Jeweler::RubygemsDotOrgTasks.new
 
 require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+Rake::TestTask.new(:spec) do |spec|
+  spec.libs << 'lib' << 'spec'
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.verbose = true
 end
 
-task :default => :test
+task :default => :spec
+
 
 require 'yard'
 YARD::Rake::YardocTask.new
