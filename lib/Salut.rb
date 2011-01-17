@@ -4,6 +4,7 @@ framework 'Foundation'
 require   'Salut/Service'
 require   'Salut/Browser'
 
-# Various modules intended to be mixed in to classes that use
+# A class to help with advertising services using Bonjour and finding
+# other services that are being advertised using Bonjour.
 module Salut
 end
