@@ -111,7 +111,7 @@ module Salut
     # @return [nil]
     def netServiceWillPublish sender
       @delegates[__method__].call sender if @delegates[__method__]
-      NSLog("Starting to advertise service (#{sender.description})")
+      Salut.log.info "Starting to advertise service (#{sender.description})"
     end
 
     # @yieldparam [NSNetService] sender
@@ -120,7 +120,7 @@ module Salut
     def netService sender, didNotPublish:error_dict
       @advertising = false
       @delegates[__method__].call sender, error_dict if @delegates[__method__]
-      NSLog("ERROR: could not advertise service (#{sender.description})\n\t the problem was\n#{error_dict.description}")
+      Salut.log.info "ERROR: could not advertise service (#{sender.description})\n\t the problem was\n#{error_dict.description}"
     end
 
     # @yieldparam [NSNetService] sender
@@ -128,14 +128,14 @@ module Salut
     def netServiceDidPublish sender
       @advertising = true
       @delegates[__method__].call sender if @delegates[__method__]
-      NSLog("Successfully advertising service (#{sender.description})")
+      Salut.log.info "Successfully advertising service (#{sender.description})"
     end
 
     # @yieldparam [NSNetService] sender
     # @return [nil]
     def netServiceWillResolve sender
       @delegates[__method__].call sender if @delegates[__method__]
-      NSLog("Resolving service (#{sender.description})")
+      Salut.log.info "Resolving service (#{sender.description})"
     end
 
     # @yieldparam [NSNetService] sender
@@ -143,14 +143,14 @@ module Salut
     # @return [nil]
     def netService sender, didNotResolve:error_dict
       @delegates[__method__].call sender if @delegates[__method__]
-      NSLog("ERROR: could not resolve service (#{sender.description})\n\t the problem was\n#{error_dict.description}")
+      Salut.log.info "ERROR: could not resolve service (#{sender.description})\n\t the problem was\n#{error_dict.description}"
     end
 
     # @yieldparam [NSNetService] sender
     # @return [nil]
     def netServiceDidResolveAddress sender
       @delegates[__method__].call sender if @delegates[__method__]
-      NSLog("Resolved address for service (#{sender.description})")
+      Salut.log.info "Resolved address for service (#{sender.description})"
     end
 
     # @yieldparam [NSNetService] sender
@@ -158,7 +158,7 @@ module Salut
     # @return [nil]
     def netService sender, didUpdateTXTRecordData:data
       @delegates[__method__].call sender, data if @delegates[__method__]
-      NSLog("Updated TXT record for service (#{sender.description})")
+      Salut.log.info "Updated TXT record for service (#{sender.description})"
     end
 
     # @yieldparam [NSNetService] sender
@@ -166,7 +166,7 @@ module Salut
     def netServiceDidStop sender
       @advertising = false
       @delegates[__method__].call sender if @delegates[__method__]
-      NSLog("Stopped advertising service (#{sender.description})")
+      Salut.log.info "Stopped advertising service (#{sender.description})"
     end
 
     # @endgroup

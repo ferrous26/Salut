@@ -1,7 +1,9 @@
 require './spec_helper'
 
 describe Salut::Service do
-
+  before do
+    Salut.log.level = Logger::WARN
+  end
 
   describe '#advertising?' do
     before do

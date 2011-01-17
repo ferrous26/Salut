@@ -97,7 +97,7 @@ module Salut
     def netServiceBrowser sender, didFindDomain:domain_name, moreComing:more
       @domains << domain_name
       @delegates[__method__].call sender, domain_name, more if @delegates[__method__]
-      NSLog("Found domain: #{domain_name}")
+      Salut.log.info "Found domain: #{domain_name}"
     end
 
     # @yieldparam [NSNetServiceBrowser] sender
@@ -107,7 +107,7 @@ module Salut
     def netServiceBrowser sender, didRemoveDomain:domain_name, moreComing:more
       @domains.delete domain_name
       @delegates[__method__].call sender, domain_name, more if @delegates[__method__]
-      NSLog("Removing domain: #{domain_name}")
+      Salut.log.info "Removing domain: #{domain_name}"
     end
 
     # @yieldparam [NSNetServiceBrowser] sender
@@ -118,7 +118,7 @@ module Salut
       salut_service = Service.new({ service:service })
       @services << salut_service
       @delegates[__method__].call sender, salut_service, more if @delegates[__method__]
-      NSLog("Found service (#{service.description})")
+      Salut.log.info "Found service (#{service.description})"
     end
 
     # @yieldparam [NSNetServiceBrowser] sender
@@ -134,7 +134,7 @@ module Salut
         end
       }
       @delegates[__method__].call sender, removed_service, more if @delegates[__method__]
-      NSLog("Removing service (#{service.description})")
+      Salut.log.info "Removing service (#{service.description})"
     end
 
     # @yieldparam [NSNetServiceBrowser] sender
@@ -142,7 +142,7 @@ module Salut
     def netServiceBrowserWillSearch sender
       @searching = true
       @delegates[__method__].call sender if @delegates[__method__]
-      NSLog("Starting search (#{sender.description})")
+      Salut.log.info "Starting search (#{sender.description})"
     end
 
     # @yieldparam [NSNetServiceBrowser] sender
@@ -151,7 +151,7 @@ module Salut
     def netServiceBrowser sender, didNotSearch:error_dict
       @searching = false
       @delegates[__method__].call sender, error_dict if @delegates[__method__]
-      NSLog("Failed to search (#{sender.description})\n\t problem was\n#{error_dict.description}")
+      Salut.log.info "Failed to search (#{sender.description})\n\t problem was\n#{error_dict.description}"
     end
 
     # @yieldparam [NSNetServiceBrowser] sender
@@ -159,7 +159,7 @@ module Salut
     def netServiceBrowserDidStopSearch sender
       @searching = false
       @delegates[__method__].call sender if @delegates[__method__]
-      NSLog("Done searching (#{sender.description})")
+      Salut.log.info "Done searching (#{sender.description})"
     end
 
     # @endgroup
