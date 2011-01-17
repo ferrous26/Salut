@@ -3,11 +3,22 @@ Salut
 
 Salut is just a little bit of example code of using Bonjour with MacRuby.
 
-Of course, this is not a substitute for reading the Bonjour overview (not even close).
+Of course, this is not a substitute for reading the [Bonjour Overview](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/NetServices/Introduction.html%23//apple_ref/doc/uid/TP40002445-SW1) and related documentation (not even close).
 
+Reference Documentation
+=======================
 
-Examples
-========
+Apple's superb documentation of Bonjour and the Bonjour Objective-C interface:
+
+- [Bonjour Overview](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/NetServices/Introduction.html%23//apple_ref/doc/uid/TP40002445-SW1)
+- [NSNetServices Programming Guide](http://developer.apple.com/library/ios/#documentation/Networking/Conceptual/NSNetServiceProgGuide/Introduction.html)
+- [NSNetService](http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSNetService_Class/Reference/Reference.html)
+- [NSNetServiceDelegate Protocol](http://developer.apple.com/library/ios/#documentation/cocoa/reference/NSNetServiceDelegate_Protocol/Reference/Reference.html)
+- [NSNetServiceBrowser](http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSNetServiceBrowser_Class/Reference/Reference.html)
+- [NSNetServiceBrowserDelegate Protocol](http://developer.apple.com/library/ios/#documentation/cocoa/reference/NSNetServiceBrowserDelegate_Protocol/Reference/Reference.html)
+
+Example Usage
+=============
 
 Advertising a hypothetical service:
 
