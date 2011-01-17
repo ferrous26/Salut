@@ -16,6 +16,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_development_dependency "bluecloth", "~> 2.0.0"
   gem.add_development_dependency "jeweler", "~> 1.5.1"
   gem.add_development_dependency "mac_bacon", "~> 1.1.21"
+  gem.add_development_dependency "rcov", ">= 0"
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -25,6 +26,13 @@ Rake::TestTask.new(:spec) do |spec|
   spec.pattern = 'spec/**/*_spec.rb'
   spec.verbose = true
 end
+
+# require 'rcov/rcovtask'
+# Rcov::RcovTask.new do |spec|
+#   spec.libs << 'spec'
+#   spec.pattern = 'spec/**/*_spec.rb'
+#   spec.verbose = true
+# end
 
 task :default => :spec
 
