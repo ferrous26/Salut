@@ -48,4 +48,43 @@ describe Salut::Service do
   end
 
 
+  describe '#service' do
+    before do
+      @service = Salut::Service.new({
+        port:3000,
+        instance_name:'Test',
+        service_type:'_http._tcp.'
+      })
+    end
+
+    it 'is an NSNetService instance when not nil' do
+      @service.start_advertising
+      @service.service.class.should.be.equal NSNetService
+    end
+
+    it 'can be set at initialization' do
+      new_service = NSNetService.alloc.initWithDomain '',
+                                                 type:'_http._tcp.',
+                                                 name:'TEST',
+                                                 port:4000
+      @service = Salut::Service.new({ service:new_service })
+      @service.service.should.be.equal new_service
+    end
+
+    it 'will be created when advertising starts' do
+      @service.service.should.be.equal nil
+      @service.start_advertising
+      @service.service.should.not.be.equal nil
+    end
+
+    it 'will be set to nil when advertising stops' do
+      @service.service.should.be.equal nil
+      @service.start_advertising
+      NSRunLoop.currentRunLoop.runUntilDate (Time.now + 5)
+      @service.stop_advertising
+      @service.service.should.not.be.equal nil
+    end
+  end
+
+
 end
