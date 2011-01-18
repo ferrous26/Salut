@@ -2,7 +2,13 @@
 
 module Salut
 
-  # Advertises its service on the local network using Bonjour.
+  # Advertises its service on the local network using Bonjour or is
+  # a service that was found using Sault::Browser.
+  #
+  # Note that an instance of the service should be used for one or the
+  # other, but not both. Some methods are meant for when you are using
+  # Service to advertise a service and other methods are meant for when
+  # you are working with services that have been discovered.
   class Service
 
     # @return [Boolean]
@@ -74,8 +80,10 @@ module Salut
     # type, instance name, or port, you will have to {#stop_advertising}
     # first.
     #
-    # If @service_type, @instance_name, and @port are not specified then
-    # you will get a NilClass NoMethodError.
+    # If there is an error creating the underlying NSNetService object
+    # (usually because one of @service_type, @instance_name, and @port
+    # are not specified) then you will get a NilClass NoMethodError when
+    # the method tries to set the delegate.
     # @param [String] domain defaults to all domains
     def start_advertising domain = ''
       @service = NSNetService.alloc.initWithDomain domain,
@@ -91,7 +99,7 @@ module Salut
     # exiting will also cause the service to stop being published.
     def stop_advertising
       @service.stop
-      @service     = nil
+      @service = nil
     end
 
     # @endgroup
@@ -156,6 +164,7 @@ module Salut
       Salut.log.info "Resolved address for service (#{sender.description})"
     end
 
+    # @todo should I process the TXT record before giving it to the proc?
     # @yieldparam [NSNetService] sender
     # @yieldparam [NSData] data the new TXT record
     # @return [nil]
