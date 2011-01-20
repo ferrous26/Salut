@@ -82,7 +82,7 @@ describe Salut::Service do
       @service.start_advertising
       NSRunLoop.currentRunLoop.runUntilDate (Time.now + 5)
       @service.stop_advertising
-      @service.service.should.not.be.equal nil
+      @service.service.should.be.equal nil
     end
   end
 
