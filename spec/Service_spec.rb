@@ -202,4 +202,34 @@ describe Salut::Service do
     end
   end
 
+
+  describe '#stop_advertising' do
+    before do
+      @service = Salut::Service.new({
+        instance_name:'TEST',
+        service_type:'_test._tcp.',
+        port:9001
+      })
+      @service.start_advertising
+      NSRunLoop.currentRunLoop.runUntilDate Time.now + 3
+    end
+
+    # a fragile test since it depends on one of the callbacks
+    # being called
+    it 'should call #stop on @service' do
+      @service.delegates[:'netServiceDidStop:'] = Proc.new { |sender|
+        true.should.be.equal true
+      }
+      @service.stop_advertising
+      NSRunLoop.currentRunLoop.runUntilDate Time.now + 3
+    end
+
+    it 'should set @service to nil' do
+      @service.service.should.not.be.equal nil
+      @service.stop_advertising
+      NSRunLoop.currentRunLoop.runUntilDate Time.now + 3
+      @service.service.should.be.equal nil
+    end
+  end
+
 end
