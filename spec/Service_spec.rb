@@ -154,4 +154,52 @@ describe Salut::Service do
     end
   end
 
+
+  describe '#start_advertising' do
+    before do
+      @service = Salut::Service.new({
+        instance_name:'TEST',
+        service_type:'_test._tcp.',
+        port:9001
+      })
+    end
+
+    it 'should create a new @service object' do
+      @service.service.should.be.equal nil
+      @service.start_advertising
+      @service.service.should.not.be.equal nil
+    end
+
+    it 'should set the delegate for @service to self' do
+      @service.delegates[:'netServiceWillPublish:'] = Proc.new { |sender|
+        @service.service.should.be.equal sender
+      }
+      @service.start_advertising
+    end
+
+    # a fragile test since it depends on one of the callbacks
+    # being called
+    it 'should call #publish on @service' do
+      @service.delegates[:'netServiceWillPublish:'] = Proc.new { |sender|
+        @service.service.should.be.equal sender
+      }
+      @service.start_advertising
+    end
+
+    it 'should set domain to an empty string by default' do
+      @service.start_advertising
+      @service.service.domain.should.be.equal ''
+    end
+
+    it 'should allow me to specify a domain' do
+      @service.start_advertising 'local.'
+      @service.service.domain.should.be.equal 'local.'
+    end
+
+    it 'should fail if service type, instance name, or port are not set' do
+      @service.service_type = nil
+      should.raise(NoMethodError) { @service.start_advertising }
+    end
+  end
+
 end

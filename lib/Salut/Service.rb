@@ -178,7 +178,7 @@ module Salut
     def netServiceDidStop sender
       @advertising = false
       @delegates[__method__].call sender if @delegates[__method__]
-      Salut.log.info "Stopped advertising service (#{sender.description})"
+      Salut.log.info "Stopped advertising/resolving service (#{sender.description})"
     end
 
     # @endgroup
