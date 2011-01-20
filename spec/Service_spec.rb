@@ -87,4 +87,40 @@ describe Salut::Service do
   end
 
 
+  describe '#initialize' do
+    it 'will let you initialize the port number' do
+      Salut::Service.new({ port:4000 }).port.should.be.equal 4000
+    end
+
+    it 'will let you initialize the instance name' do
+      Salut::Service.new({ instance_name:'TEST' }).instance_name.should.be.equal 'TEST'
+    end
+
+    it 'will let you initialize the service type' do
+      Salut::Service.new({ service_type:'_http._tcp.' }).service_type.should.be.equal '_http._tcp.'
+    end
+
+    it 'will let you initialize with a service' do
+      new_service = NSNetService.alloc.initWithDomain '',
+                                                 type:'_http._tcp.',
+                                                 name:'TEST',
+                                                 port:4000
+      @service = Salut::Service.new({ service:new_service })
+      @service.service.should.be.equal new_service
+    end
+
+    it 'will initialize delegates to an empty hash' do
+      Salut::Service.new.delegates.should.be.equal Hash.new
+    end
+
+    it 'will initialize @advertising to false' do
+      Salut::Service.new.advertising?.should.be.equal false
+    end
+
+    it 'will let you initialize with nothing being set' do
+      @service = Salut::Service.new
+      @service.should.not.be.equal nil
+    end
+  end
+
 end
