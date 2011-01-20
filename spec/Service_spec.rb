@@ -123,4 +123,35 @@ describe Salut::Service do
     end
   end
 
+
+  describe '#delegates' do
+    it 'should be initialized to an empty hash' do
+      Salut::Service.new.delegates.should.be.equal Hash.new
+    end
+
+    it 'should be writable' do
+      @service = Salut::Service.new
+      @service.delegates[:test] = Proc.new { true }
+      @service.delegates[:test].should.not.be.equal nil
+    end
+  end
+
+
+  describe '#[]' do
+    it 'should be equivalent to #delegates[]' do
+      @service = Salut::Service.new
+      @service.delegates[:test] = 'HEY'
+      @service[:test].should.be.equal 'HEY'
+    end
+  end
+
+
+  describe '#[]=' do
+    it 'should be equivalent to #delegates[]=' do
+      @service = Salut::Service.new
+      @service[:test] = 'HEY'
+      @service.delegates[:test].should.be.equal 'HEY'
+    end
+  end
+
 end
