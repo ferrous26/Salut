@@ -77,6 +77,7 @@ module Salut
 
     # @group Finding services
 
+    # @todo find a way to use default arguments
     # @param [String] service_name
     # @param [String] domain_name
     def find_services service_type, in_domain:domain_name
