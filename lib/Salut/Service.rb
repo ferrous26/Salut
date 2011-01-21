@@ -143,7 +143,6 @@ module Salut
       Salut.log.info "Successfully advertising service (#{sender.description})"
     end
 
-    # @todo find out if this ever gets used (I don't think so)
     # @yieldparam [NSNetService] sender
     # @return [nil]
     def netServiceWillResolve sender
