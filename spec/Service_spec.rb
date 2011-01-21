@@ -232,4 +232,43 @@ describe Salut::Service do
     end
   end
 
+
+  describe '#resolve' do
+    before do
+      @service = Salut::Service.new({
+        instance_name:'TEST',
+        service_type:'_test._tcp.',
+        port:9001
+      })
+      @service.start_advertising
+      @browser = Salut::Browser.new
+      NSRunLoop.currentRunLoop.runUntilDate Time.now + 2
+    end
+
+    # a fragile test since it depends on callbacks of callbacks being called
+    it 'should cause the resolve callback to be called' do
+      @browser.delegates[:'netServiceBrowser:didFindService:moreComing:'] = Proc.new {
+        |sender, service, more|
+        service.delegates[:'netServiceWillResolve:'] = Proc.new { |sender|
+          true.should.be.equal true
+        }
+        service.resolve
+      }
+      @browser.find_services '_test._tcp.', in_domain:''
+      NSRunLoop.currentRunLoop.runUntilDate (Time.now + 5)
+    end
+
+    it 'should allow me to override the timeout' do
+      @browser.delegates[:'netServiceBrowser:didFindService:moreComing:'] = Proc.new {
+        |sender, service, more|
+        service.delegates[:'netServiceWillResolve:'] = Proc.new { |sender|
+          true.should.be.equal true
+        }
+        service.resolve 2.0
+      }
+      @browser.find_services '_test._tcp.', in_domain:''
+      NSRunLoop.currentRunLoop.runUntilDate (Time.now + 5)
+    end
+  end
+
 end
