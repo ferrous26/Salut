@@ -110,6 +110,7 @@ module Salut
     # A more Ruby-like #resolveWithTimeout by supporting a default argument
     # @param [Float] timeout number of seconds to wait before timing out
     def resolve timeout = 60.0
+      @service.delegate = self
       @service.resolveWithTimeout timeout
     end
 
