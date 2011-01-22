@@ -172,7 +172,7 @@ describe Salut::Service do
 
     it 'should set the delegate for @service to self' do
       @service.delegates[:'netServiceWillPublish:'] = Proc.new { |sender|
-        @service.service.should.be.equal sender
+        @service.should.be.equal sender
       }
       @service.start_advertising
     end
@@ -181,7 +181,7 @@ describe Salut::Service do
     # being called
     it 'should call #publish on @service' do
       @service.delegates[:'netServiceWillPublish:'] = Proc.new { |sender|
-        @service.service.should.be.equal sender
+        @service.should.be.equal sender
       }
       @service.start_advertising
     end
