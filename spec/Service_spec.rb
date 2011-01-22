@@ -1,4 +1,5 @@
 require './spec_helper'
+require 'StringIO'
 
 describe Salut::Service do
   before do
@@ -270,5 +271,50 @@ describe Salut::Service do
       NSRunLoop.currentRunLoop.runUntilDate (Time.now + 5)
     end
   end
+
+
+  describe 'callback skeletons' do
+
+    before do
+      @output         = StringIO.new
+      Salut.log       = Logger.new @output
+      Salut.log.level = Logger::INFO
+
+      @service = Salut::Service.new({
+        service_type:'_test._tcp.',
+        instance_name:'TEST',
+        port:9001
+      })
+    end
+
+
+    describe '#netServiceWillPublish' do
+      it 'should call its proc if exists' do
+        @service.delegates[:'netServiceWillPublish:'] = Proc.new { |sender|
+          true.should.be.equal true
+        }
+        @service.start_advertising
+      end
+
+      it 'should not explode if the proc does not exist' do
+        @service.start_advertising
+        true.should.be.equal true #if we got here we didn't explode
+      end
+
+      it 'should log a message at the INFO level' do
+        @service.start_advertising
+        @output.string.should.not.be.equal ''
+      end
+
+      it 'should pass self to the proc' do
+        @service.delegates[:'netServiceWillPublish:'] = Proc.new { |sender|
+          sender.should.be.equal @service
+        }
+        @service.start_advertising
+      end
+    end
+
+  end
+
 
 end
