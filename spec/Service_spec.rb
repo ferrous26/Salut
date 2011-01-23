@@ -301,7 +301,7 @@ describe Salut::Service do
 
       it 'should log a message at the INFO level' do
         @service.start_advertising
-        @output.string.should.not.be.equal ''
+        @output.string.should.match /Starting to advertise/
       end
 
       it 'should pass self to the proc' do
