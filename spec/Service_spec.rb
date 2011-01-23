@@ -33,12 +33,10 @@ describe Salut::Service do
     end
 
     it 'should be false if advertising fails' do
-      @other_service = @service.dup
+      @service.service_type = 'badname'
       @service.start_advertising
       NSRunLoop.currentRunLoop.runUntilDate Time.now + 2
-      @other_service.start_advertising
-      NSRunLoop.currentRunLoop.runUntilDate Time.now + 2
-      @other_service.advertising?.should.be.equal false
+      @service.advertising?.should.be.equal false
     end
 
     it 'should be true when advertising is successful' do
