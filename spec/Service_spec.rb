@@ -312,6 +312,93 @@ describe Salut::Service do
       end
     end
 
+
+    describe '#netService:didNotPublish:' do
+      before do
+        @service.service_type = 'badname' # this is how we make publishing fail
+      end
+
+      it 'should call its proc if exists' do
+        @service.delegates[:'netService:didNotPublish:'] = Proc.new { |sender, dict|
+          true.should.be.equal true
+        }
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+      end
+
+      it 'should not explode if the proc does not exist' do
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        true.should.be.equal true
+      end
+
+      it 'should log a message at the INFO level' do
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        @output.string.should.match /ERROR: could not advertise/
+      end
+
+      it '@advertising will still be false' do
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        @service.advertising.should.be.equal false
+      end
+
+      it 'should pass self to the proc' do
+        @service.delegates[:'netService:didNotPublish:'] = Proc.new { |sender, dict|
+          sender.should.be.equal @service
+        }
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+      end
+
+      it 'should pass the error dict to the proc' do
+        @service.delegates[:'netService:didNotPublish:'] = Proc.new { |sender, dict|
+          dict.class.should.be.equal Hash
+          dict['NSNetServicesErrorCode'].should.not.be.equal nil
+        }
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+      end
+    end
+
+
+    describe '#netServiceDidPublish' do
+      it 'should call its proc if exists' do
+        @service.delegates[:'netServiceDidPublish:'] = Proc.new { |sender|
+          true.should.be.equal true
+        }
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+      end
+
+      it 'should not explode if the proc does not exist' do
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        true.should.be.equal true
+      end
+
+      it 'should log a message at the INFO level' do
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        @output.string.should.match /Successfully advertising/
+      end
+
+      it 'should set @advertising to true' do
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        @service.advertising.should.be.equal true
+      end
+
+      it 'should pass self to the proc' do
+        @service.delegates[:'netServiceDidPublish:'] = Proc.new { |sender|
+          sender.should.be.equal @service
+        }
+        @service.start_advertising
+        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+      end
+    end
+
   end
 
 
