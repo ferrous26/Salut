@@ -26,22 +26,22 @@ describe Salut::Service do
 
     it 'should be false after I stop advertising' do
       @service.start_advertising
-      NSRunLoop.currentRunLoop.runUntilDate Time.now + 2
+      run_run_loop
       @service.stop_advertising
-      NSRunLoop.currentRunLoop.runUntilDate Time.now + 2
+      run_run_loop
       @service.advertising?.should.be.equal false
     end
 
     it 'should be false if advertising fails' do
       @service.service_type = 'badname'
       @service.start_advertising
-      NSRunLoop.currentRunLoop.runUntilDate Time.now + 2
+      run_run_loop
       @service.advertising?.should.be.equal false
     end
 
     it 'should be true when advertising is successful' do
       @service.start_advertising
-      NSRunLoop.currentRunLoop.runUntilDate Time.now + 2
+      run_run_loop
       @service.advertising?.should.be.equal true
     end
   end
@@ -79,7 +79,7 @@ describe Salut::Service do
     it 'will be set to nil when advertising stops' do
       @service.service.should.be.equal nil
       @service.start_advertising
-      NSRunLoop.currentRunLoop.runUntilDate (Time.now + 5)
+      run_run_loop 5
       @service.stop_advertising
       @service.service.should.be.equal nil
     end
@@ -220,13 +220,13 @@ describe Salut::Service do
         true.should.be.equal true
       }
       @service.stop_advertising
-      NSRunLoop.currentRunLoop.runUntilDate Time.now + 3
+      run_run_loop
     end
 
     it 'should set @service to nil' do
       @service.service.should.not.be.equal nil
       @service.stop_advertising
-      NSRunLoop.currentRunLoop.runUntilDate Time.now + 3
+      run_run_loop
       @service.service.should.be.equal nil
     end
   end
@@ -241,7 +241,7 @@ describe Salut::Service do
       })
       @service.start_advertising
       @browser = Salut::Browser.new
-      NSRunLoop.currentRunLoop.runUntilDate Time.now + 2
+      run_run_loop
     end
 
     # a fragile test since it depends on callbacks of callbacks being called
@@ -254,7 +254,7 @@ describe Salut::Service do
         service.resolve
       }
       @browser.find_services '_test._tcp.', in_domain:''
-      NSRunLoop.currentRunLoop.runUntilDate (Time.now + 5)
+      run_run_loop
     end
 
     it 'should allow me to override the timeout' do
@@ -266,7 +266,7 @@ describe Salut::Service do
         service.resolve 2.0
       }
       @browser.find_services '_test._tcp.', in_domain:''
-      NSRunLoop.currentRunLoop.runUntilDate (Time.now + 5)
+      run_run_loop
     end
   end
 
@@ -323,24 +323,24 @@ describe Salut::Service do
           true.should.be.equal true
         }
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
       end
 
       it 'should not explode if the proc does not exist' do
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
         true.should.be.equal true
       end
 
       it 'should log a message at the INFO level' do
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
         @output.string.should.match /ERROR: could not advertise/
       end
 
       it '@advertising will still be false' do
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
         @service.advertising.should.be.equal false
       end
 
@@ -349,7 +349,7 @@ describe Salut::Service do
           sender.should.be.equal @service
         }
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
       end
 
       it 'should pass the error dict to the proc' do
@@ -358,7 +358,7 @@ describe Salut::Service do
           dict['NSNetServicesErrorCode'].should.not.be.equal nil
         }
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
       end
     end
 
@@ -369,24 +369,24 @@ describe Salut::Service do
           true.should.be.equal true
         }
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
       end
 
       it 'should not explode if the proc does not exist' do
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
         true.should.be.equal true
       end
 
       it 'should log a message at the INFO level' do
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
         @output.string.should.match /Successfully advertising/
       end
 
       it 'should set @advertising to true' do
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
         @service.advertising.should.be.equal true
       end
 
@@ -395,7 +395,7 @@ describe Salut::Service do
           sender.should.be.equal @service
         }
         @service.start_advertising
-        NSRunLoop.currentRunLoop.runUntilDate (Time.now + 2)
+        run_run_loop
       end
     end
 
