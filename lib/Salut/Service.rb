@@ -154,7 +154,7 @@ module Salut
     # @yieldparam [Hash] error_dict
     # @return [nil]
     def netService sender, didNotResolve:error_dict
-      @delegates[__method__].call self if @delegates[__method__]
+      @delegates[__method__].call self, error_dict if @delegates[__method__]
       Salut.log.info "ERROR: could not resolve service (#{sender.description})\n\t the problem was\n#{error_dict.description}"
     end
 
