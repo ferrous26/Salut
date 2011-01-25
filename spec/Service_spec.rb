@@ -517,6 +517,51 @@ describe Salut::Service do
         run_run_loop
       end
     end
+
+
+
+    describe '#netServiceDidStop' do
+      before do
+        @service.start_advertising
+        run_run_loop 1
+      end
+
+      it 'should call its proc if exists' do
+        @service.delegates[:'netServiceDidStop:'] = Proc.new { |sender|
+          true.should.be.equal true
+        }
+        @service.stop_advertising
+        run_run_loop
+      end
+
+      it 'should not explode if the proc does not exist' do
+        @service.stop_advertising
+        run_run_loop
+        true.should.be.equal true
+      end
+
+      it 'should log a message at the INFO level' do
+        @service.stop_advertising
+        run_run_loop
+        @output.string.should.match /Stopped advertising/
+      end
+
+      it 'should set @advertising to false' do
+        @service.advertising?.should.be.equal true
+        @service.stop_advertising
+        run_run_loop
+        @service.advertising?.should.be.equal false
+      end
+
+      it 'should pass self to the proc' do
+        @service.delegates[:'netServiceDidStop:'] = Proc.new { |sender|
+          sender.should.be.equal @service
+        }
+        @service.stop_advertising
+        run_run_loop
+      end
+    end
+
   end
 
 
