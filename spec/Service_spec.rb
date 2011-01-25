@@ -399,6 +399,124 @@ describe Salut::Service do
       end
     end
 
+
+    describe '#netServiceWillResolve' do
+      before do
+        @service.start_advertising
+        @browser = Salut::Browser.new
+        @browser.find_services '_test._tcp.', in_domain:''
+        run_run_loop
+        @found_service = @browser.services.first
+      end
+
+      it 'should call its proc if it exists' do
+        @found_service.delegates[:'netServiceWillResolve:'] = Proc.new { |sender|
+          true.should.be.equal true
+        }
+        @found_service.resolve
+      end
+
+      it 'should not explode if the proc does not exist' do
+        @found_service.resolve
+        true.should.be.equal true
+      end
+
+      it 'should log a message at the INFO level' do
+        @found_service.resolve
+        @output.string.should.match /Resolving service/
+      end
+
+      it 'should pass self to the proc' do
+        @found_service.delegates[:'netServiceWillResolve:'] = Proc.new { |sender|
+          @found_service.should.be.equal sender
+        }
+        @found_service.resolve
+      end
+    end
+
+
+    # Spitting in the face of my own documentation. Why? Because I want the
+    # the code to fail and this is the easiest way to make it happen.
+    describe '#netService:didNotResolve:' do
+      before do
+        @service.start_advertising
+      end
+
+      it 'should call its proc if it exists' do
+        @service.delegates[:'netService:didNotResolve:'] = Proc.new { |sender, dict|
+          true.should.be.equal true
+        }
+        @service.resolve 1
+        run_run_loop
+      end
+
+      it 'should not explode if the proc does not exist' do
+        @service.resolve 1
+        run_run_loop
+        true.should.be.equal true
+      end
+
+      it 'should log a message at the INFO level' do
+        @service.resolve 1
+        run_run_loop
+        @output.string.should.match /ERROR: could not resolve/
+      end
+
+      it 'should pass self to the proc' do
+        @service.delegates[:'netService:didNotResolve:'] = Proc.new { |sender, dict|
+          sender.should.be.equal @service
+        }
+        @service.resolve 1
+        run_run_loop
+      end
+
+      it 'should pass the error dict to the proc' do
+        @service.delegates[:'netService:didNotResolve:'] = Proc.new { |sender, dict|
+          dict.class.should.be.equal Hash
+        }
+        @service.resolve 1
+        run_run_loop
+      end
+    end
+
+
+    describe '#netServiceDidResolveAddress' do
+      before do
+        @service.start_advertising
+        @browser = Salut::Browser.new
+        @browser.find_services '_test._tcp.', in_domain:''
+        run_run_loop
+        @found_service = @browser.services.first
+      end
+
+      it 'should call its proc if it exists' do
+        @found_service.delegates[:'netServiceDidResolveAddress:'] = Proc.new { |sender|
+          true.should.be.equal true
+        }
+        @found_service.resolve
+        run_run_loop
+      end
+
+      it 'should not explode if the proc does not exist' do
+        @found_service.resolve
+        run_run_loop
+        true.should.be.equal true
+      end
+
+      it 'should log a message at the INFO level' do
+        @found_service.resolve
+        run_run_loop
+        @output.string.should.match /Resolved address for service/
+      end
+
+      it 'should pass self to the proc' do
+        @found_service.delegates[:'netServiceDidResolveAddress:'] = Proc.new { |sender|
+          @found_service.should.be.equal sender
+        }
+        @found_service.resolve
+        run_run_loop
+      end
+    end
   end
 
 
