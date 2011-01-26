@@ -52,4 +52,23 @@ describe Salut::Browser do
   end
 
 
+  describe '#domains' do
+    it 'should be initialized to an empty array' do
+      @browser.domains.class.should.be.equal Array
+      @browser.domains.should.be.equal []
+    end
+
+    # here I assume that local. will always be found
+    it 'should be populated with domains when I browse for domains' do
+      @browser.domains.size.should.be.equal 0
+      @browser.find_browsable_domains
+      run_run_loop
+      @browser.domains.size.should.not.be.equal 0
+    end
+
+    # @todo not sure how to fake this one
+    it 'should shrink when domains disappear' do
+    end
+  end
+
 end
