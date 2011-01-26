@@ -21,7 +21,7 @@ module Salut
     # @return [Array<String>]
     attr_reader :domains
 
-    # @return [Array<NSNetService>]
+    # @return [Array<Salut::Service>]
     attr_reader :services
 
     # Ensure that some instance variables are initialized
