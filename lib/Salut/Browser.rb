@@ -24,6 +24,9 @@ module Salut
     # @return [Array<Salut::Service>]
     attr_reader :services
 
+    # @return [NSNetServiceBrowser]
+    attr_reader :browser
+
     # Ensure that some instance variables are initialized
     def initialize
       @browser          = NSNetServiceBrowser.alloc.init
