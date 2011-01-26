@@ -91,38 +91,38 @@ module Salut
 
     # @group Delegate methods
 
-    # @yieldparam [NSNetServiceBrowser] sender
+    # @yieldparam [Salut::Browser] sender
     # @yieldparam [String] domain_name
     # @yieldparam [Boolean] more
     # @return [nil]
     def netServiceBrowser sender, didFindDomain:domain_name, moreComing:more
       @domains << domain_name
-      @delegates[__method__].call sender, domain_name, more if @delegates[__method__]
+      @delegates[__method__].call self, domain_name, more if @delegates[__method__]
       Salut.log.info "Found domain: #{domain_name}"
     end
 
-    # @yieldparam [NSNetServiceBrowser] sender
+    # @yieldparam [Salut::Browser] sender
     # @yieldparam [String] domain_name
     # @yieldparam [Boolean] more
     # @return [nil]
     def netServiceBrowser sender, didRemoveDomain:domain_name, moreComing:more
       @domains.delete domain_name
-      @delegates[__method__].call sender, domain_name, more if @delegates[__method__]
+      @delegates[__method__].call self, domain_name, more if @delegates[__method__]
       Salut.log.info "Removing domain: #{domain_name}"
     end
 
-    # @yieldparam [NSNetServiceBrowser] sender
+    # @yieldparam [Salut::Browser] sender
     # @yieldparam [Salut::Service] service
     # @yieldparam [Boolean] more
     # @return [nil]
     def netServiceBrowser sender, didFindService:service, moreComing:more
       salut_service = Service.new({ service:service })
       @services << salut_service
-      @delegates[__method__].call sender, salut_service, more if @delegates[__method__]
+      @delegates[__method__].call self, salut_service, more if @delegates[__method__]
       Salut.log.info "Found service (#{service.description})"
     end
 
-    # @yieldparam [NSNetServiceBrowser] sender
+    # @yieldparam [Salut::Browser] sender
     # @yieldparam [Salut::Service] removed_service
     # @yieldparam [Boolean] more
     # @return [nil]
@@ -134,32 +134,32 @@ module Salut
           true
         end
       }
-      @delegates[__method__].call sender, removed_service, more if @delegates[__method__]
+      @delegates[__method__].call self, removed_service, more if @delegates[__method__]
       Salut.log.info "Removing service (#{service.description})"
     end
 
-    # @yieldparam [NSNetServiceBrowser] sender
+    # @yieldparam [Salut::Browser] sender
     # @return [nil]
     def netServiceBrowserWillSearch sender
       @searching = true
-      @delegates[__method__].call sender if @delegates[__method__]
+      @delegates[__method__].call self if @delegates[__method__]
       Salut.log.info "Starting search (#{sender.description})"
     end
 
-    # @yieldparam [NSNetServiceBrowser] sender
+    # @yieldparam [Salut::Browser] sender
     # @yieldparam [Hash] error_dict
     # @return [nil]
     def netServiceBrowser sender, didNotSearch:error_dict
       @searching = false
-      @delegates[__method__].call sender, error_dict if @delegates[__method__]
+      @delegates[__method__].call self, error_dict if @delegates[__method__]
       Salut.log.info "Failed to search (#{sender.description})\n\t problem was\n#{error_dict.description}"
     end
 
-    # @yieldparam [NSNetServiceBrowser] sender
+    # @yieldparam [Salut::Browser] sender
     # @return [nil]
     def netServiceBrowserDidStopSearch sender
       @searching = false
-      @delegates[__method__].call sender if @delegates[__method__]
+      @delegates[__method__].call self if @delegates[__method__]
       Salut.log.info "Done searching (#{sender.description})"
     end
 
