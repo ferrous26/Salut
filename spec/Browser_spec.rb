@@ -71,4 +71,50 @@ describe Salut::Browser do
     end
   end
 
+
+  describe '#services' do
+    before do
+      @service = Salut::Service.new(
+        service_type:'_test._tcp.',
+        instance_name:'TEST',
+        port:9000
+      )
+      @service.start_advertising
+      run_run_loop
+    end
+
+    it 'should be initialized to an empty array' do
+      @browser.services.class.should.be.equal Array
+      @browser.services.should.be.equal []
+    end
+
+    it 'should populate when I call #find_services:in_domain:' do
+      @browser.services.size.should.be.equal 0
+      @browser.find_services '_test._tcp.', in_domain:''
+      run_run_loop
+      @browser.services.size.should.not.be.equal 0
+    end
+
+    it 'should dispopulate if services go away after being discovered by calling #find_services:in_domain:' do
+      @browser.services.size.should.be.equal 0
+      @browser.find_services '_test._tcp.', in_domain:''
+      run_run_loop
+      @browser.services.size.should.be.equal 1
+      @service.stop_advertising
+      run_run_loop
+      @browser.services.size.should.be.equal 0
+    end
+  end
+
+
+  describe '#browser' do
+    it 'should be the underlying NSNetServiceBrowser' do
+      @browser.browser.class.should.be.equal NSNetServiceBrowser
+    end
+
+    it 'should be set at initialization' do
+      @browser.browser.should.not.be.equal nil
+    end
+  end
+
 end
