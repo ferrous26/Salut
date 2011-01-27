@@ -117,4 +117,26 @@ describe Salut::Browser do
     end
   end
 
+
+  describe '#initialize' do
+    it 'should initialize browser with an NSNetServiceBrowser' do
+      @browser.browser.should.not.be.equal nil
+    end
+
+    it 'should initialize #domains to an empty array' do
+      @browser.domains.should.be.equal []
+    end
+
+    it 'should initialize #services to an empty array' do
+      @browser.services.should.be.equal []
+    end
+
+    it 'should initialize #delegates to an empty hash' do
+      @browser.delegates.should.be.equal {}
+    end
+
+    it 'should initialize #searching? to false' do
+      @browser.searching?.should.be.equal false
+    end
+  end
 end
