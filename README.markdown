@@ -3,6 +3,12 @@ Salut
 
 Salut is just a little bit of example code of using Bonjour with MacRuby.
 
+If all you want to do is log that callbacks were called back, or just add
+very little to a callback, then this code will work well for you. But Apple
+has already done a very good job of distilling Bonjour to the point that
+even without this gem you would not have to add much code in order to use
+Bonjour.
+
 Of course, this is not a substitute for reading the [Bonjour Overview](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/NetServices/Introduction.html%23//apple_ref/doc/uid/TP40002445-SW1) and related documentation (not even close).
 
 Reference Documentation
@@ -22,11 +28,11 @@ Example Usage
 
 Advertising a hypothetical service:
 
-            service = Salut::Service.new({
+            service = Salut::Service.new(
               service_type:'_http._tcp.',
               instance_name:`hostname s`.chomp,
               port:3000
-            })
+            )
             service.start_advertising
 
 Finding the service using the browser:
