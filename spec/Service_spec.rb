@@ -519,6 +519,23 @@ describe Salut::Service do
     end
 
 
+    # describe '#netService:didUpdateTXTRecordData:' do
+    #   it 'should call its proc if exists' do
+    #   end
+
+    #   it 'should not explode if the proc does not exist' do
+    #   end
+
+    #   it 'should log a message at the INFO level' do
+    #   end
+
+    #   it 'should pass self to the proc' do
+    #   end
+
+    #   it 'should pass the TXT record data to the proc' do
+    #   end
+    # end
+
 
     describe '#netServiceDidStop' do
       before do
