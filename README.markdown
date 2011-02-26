@@ -29,26 +29,27 @@ Example Usage
 Advertising a hypothetical service:
 
             service = Salut::Service.new(
-              service_type:'_http._tcp.',
-              instance_name:`hostname s`.chomp,
-              port:3000
+               service_type:'_http._tcp.',
+              instance_name:'SalutDemo',
+                       port:3000
             )
             service.start_advertising
 
 Finding the service using the browser:
 
             browser = Salut::Browser.new
-            # look at the delegate methods to find out what variables are given to the proc
-            browser.delegates[:'netServiceBrowser:didFindService:moreComing:'] = Proc.new {
+            # the NSNetServiceBrowserDelegate lists all the possible delegates
+            # or look at the 'Delegate methods' group in lib/Salut/Browser.rb
+            browser.delegate :"netServiceBrowser:didFindService:moreComing:" do
                 |sender, service, more|
-                service.resolve # because we want to resolve them all!
+                service.resolve # if you want to resolve all services found
                 if more
                    NSLog('Not up to date yet')
                 else
                    NSLog('All caught up')
                 end
-            }
-            browser.find_services '_http._tcp.', in_domain:''
+            end
+            browser.find_services '_http._tcp.'
 
 If you want to stop advertising:
 
