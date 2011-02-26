@@ -53,9 +53,6 @@ module Salut
 
     # @group Adding callback extensions
 
-    # @return [Hash{Symbol=>Proc}]
-    attr_accessor :delegates
-
     # A shortcut for reading/writing from the delegate methods
     # @param [Symbol] method
     # @return [Proc]
