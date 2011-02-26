@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+require 'Salut/Service'
 
 module Salut
 
@@ -112,7 +112,7 @@ module Salut
     # @yieldparam [Boolean] more
     # @return [nil]
     def netServiceBrowser sender, didFindService:service, moreComing:more
-      salut_service = Service.new({ service:service })
+      salut_service = Service.new service:service
       @services << salut_service
       @delegates[__method__].call self, salut_service, more if @delegates[__method__]
       Salut.log.info "Found service (#{service.description})"
@@ -123,7 +123,7 @@ module Salut
     # @yieldparam [Boolean] more
     # @return [nil]
     def netServiceBrowser sender, didRemoveService:service, moreComing:more
-      removed_service
+      removed_service = nil
       @services.delete_if { |salut_service|
         if salut_service.service == service
           removed_service = salut_service

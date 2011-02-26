@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 module Salut
 
   # Advertises its service on the local network using Bonjour or is
