@@ -1,8 +1,6 @@
-# -*- encoding: utf-8 -*-
-
 Gem::Specification.new do |s|
   s.name    = 'Salut'
-  s.version = '0.3.1'
+  s.version = '0.4.0'
 
   s.required_rubygems_version = Gem::Requirement.new('>= 1.4.2')
   s.rubygems_version          = '1.4.2'
