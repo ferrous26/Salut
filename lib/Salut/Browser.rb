@@ -48,19 +48,15 @@ module Salut
     # @return [Hash{Symbol=>Proc}]
     attr_accessor :delegates
 
-    # A shortcut for reading from the delegate methods
-    # @param [Symbol] key
+    # A shortcut for reading/writing to the delegate methods hash
+    # @param [Symbol] method the name of the callback
     # @return [Proc]
-    def [] key
-      @delegates[key]
-    end
-
-    # A shortcut for writing to the delegate methods hash
-    # @param [Symbol] key
-    # @param [Proc] value
-    # @return [Proc]
-    def []= key, value
-      @delegates[key] = value
+    def delegate method
+      if block_given?
+        @delegates[method] = Proc.new
+      else
+        @delegates[method]
+      end
     end
 
     # @endgroup
