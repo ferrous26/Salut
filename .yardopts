@@ -1,0 +1,10 @@
+--protected
+--no-private
+--verbose
+--no-cache
+--no-output
+--markup markdown
+--readme README.markdown
+lib/**/*.rb
+-
+LICENSE.txt
