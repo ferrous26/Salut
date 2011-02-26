@@ -1,5 +1,4 @@
 require './spec_helper'
-require 'StringIO'
 
 describe Salut::Browser do
   before do
@@ -13,7 +12,7 @@ describe Salut::Browser do
     end
 
     it 'should be false after I stop searching' do
-      @browser.find_services '_ssh._tcp.', in_domain:''
+      @browser.find_services '_ssh._tcp.'
       run_run_loop 1
       @browser.searching?.should.be.equal true
 
@@ -33,13 +32,13 @@ describe Salut::Browser do
     # I don't know how to cause a failure when searching
     # for browsable domains
     it 'should be false if searching fails' do
-      @browser.find_services 'badname', in_domain:''
+      @browser.find_services 'badname'
       run_run_loop
       @browser.searching?.should.be.equal false
     end
 
     it 'should be true when searching starts' do
-      @browser.find_services '_ssh._tcp.', in_domain:''
+      @browser.find_services '_ssh._tcp.'
       @browser.searching?.should.be.equal true
 
       @browser.stop_finding_services
@@ -67,8 +66,7 @@ describe Salut::Browser do
     end
 
     # @todo not sure how to fake this one
-    it 'should shrink when domains disappear' do
-    end
+    it 'should shrink when domains disappear'
   end
 
 
@@ -88,16 +86,16 @@ describe Salut::Browser do
       @browser.services.should.be.equal []
     end
 
-    it 'should populate when I call #find_services:in_domain:' do
+    it 'should populate when I call #find_services' do
       @browser.services.size.should.be.equal 0
-      @browser.find_services '_test._tcp.', in_domain:''
+      @browser.find_services '_test._tcp.'
       run_run_loop
       @browser.services.size.should.not.be.equal 0
     end
 
-    it 'should dispopulate if services go away after being discovered by calling #find_services:in_domain:' do
+    it 'should dispopulate if services go away after being discovered by calling #find_services' do
       @browser.services.size.should.be.equal 0
-      @browser.find_services '_test._tcp.', in_domain:''
+      @browser.find_services '_test._tcp.'
       run_run_loop
       @browser.services.size.should.be.equal 1
       @service.stop_advertising
@@ -129,10 +127,6 @@ describe Salut::Browser do
 
     it 'should initialize #services to an empty array' do
       @browser.services.should.be.equal []
-    end
-
-    it 'should initialize #delegates to an empty hash' do
-      @browser.delegates.should.be.equal {}
     end
 
     it 'should initialize #searching? to false' do
