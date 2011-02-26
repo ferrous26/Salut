@@ -90,7 +90,6 @@ module Salut
     # @yieldparam [Salut::Browser] sender
     # @yieldparam [String] domain_name
     # @yieldparam [Boolean] more
-    # @return [nil]
     def netServiceBrowser sender, didFindDomain:domain_name, moreComing:more
       @domains << domain_name
       @delegates[__method__].call self, domain_name, more if @delegates[__method__]
@@ -100,7 +99,6 @@ module Salut
     # @yieldparam [Salut::Browser] sender
     # @yieldparam [String] domain_name
     # @yieldparam [Boolean] more
-    # @return [nil]
     def netServiceBrowser sender, didRemoveDomain:domain_name, moreComing:more
       @domains.delete domain_name
       @delegates[__method__].call self, domain_name, more if @delegates[__method__]
@@ -110,7 +108,6 @@ module Salut
     # @yieldparam [Salut::Browser] sender
     # @yieldparam [Salut::Service] service
     # @yieldparam [Boolean] more
-    # @return [nil]
     def netServiceBrowser sender, didFindService:service, moreComing:more
       salut_service = Service.new service:service
       @services << salut_service
@@ -121,7 +118,6 @@ module Salut
     # @yieldparam [Salut::Browser] sender
     # @yieldparam [Salut::Service] removed_service
     # @yieldparam [Boolean] more
-    # @return [nil]
     def netServiceBrowser sender, didRemoveService:service, moreComing:more
       removed_service = nil
       @services.delete_if { |salut_service|
@@ -135,7 +131,6 @@ module Salut
     end
 
     # @yieldparam [Salut::Browser] sender
-    # @return [nil]
     def netServiceBrowserWillSearch sender
       @searching = true
       @delegates[__method__].call self if @delegates[__method__]
@@ -144,7 +139,6 @@ module Salut
 
     # @yieldparam [Salut::Browser] sender
     # @yieldparam [Hash] error_dict
-    # @return [nil]
     def netServiceBrowser sender, didNotSearch:error_dict
       @searching = false
       @delegates[__method__].call self, error_dict if @delegates[__method__]
@@ -152,7 +146,6 @@ module Salut
     end
 
     # @yieldparam [Salut::Browser] sender
-    # @return [nil]
     def netServiceBrowserDidStopSearch sender
       @searching = false
       @delegates[__method__].call self if @delegates[__method__]

@@ -111,7 +111,6 @@ module Salut
     # @group Delegate methods
 
     # @yieldparam [Salut::Service] sender a reference to self
-    # @return [nil]
     def netServiceWillPublish sender
       @delegates[__method__].call self if @delegates[__method__]
       Salut.log.info "Starting to advertise service (#{sender.description})"
@@ -119,7 +118,6 @@ module Salut
 
     # @yieldparam [Salut::Service] sender a reference to self
     # @yieldparam [Hash] error_dict
-    # @return [nil]
     def netService sender, didNotPublish:error_dict
       @advertising = false
       @delegates[__method__].call self, error_dict if @delegates[__method__]
@@ -127,7 +125,6 @@ module Salut
     end
 
     # @yieldparam [Salut::Service] sender a reference to self
-    # @return [nil]
     def netServiceDidPublish sender
       @advertising = true
       @delegates[__method__].call self if @delegates[__method__]
@@ -135,7 +132,6 @@ module Salut
     end
 
     # @yieldparam [Salut::Service] sender a reference to self
-    # @return [nil]
     def netServiceWillResolve sender
       @delegates[__method__].call self if @delegates[__method__]
       Salut.log.info "Resolving service (#{sender.description})"
@@ -143,14 +139,12 @@ module Salut
 
     # @yieldparam [Salut::Service] sender a reference to self
     # @yieldparam [Hash] error_dict
-    # @return [nil]
     def netService sender, didNotResolve:error_dict
       @delegates[__method__].call self, error_dict if @delegates[__method__]
       Salut.log.info "ERROR: could not resolve service (#{sender.description})\n\t the problem was\n#{error_dict.description}"
     end
 
     # @yieldparam [Salut::Service] sender a reference to self
-    # @return [nil]
     def netServiceDidResolveAddress sender
       @delegates[__method__].call self if @delegates[__method__]
       Salut.log.info "Resolved address for service (#{sender.description})"
@@ -159,14 +153,12 @@ module Salut
     # @todo should I process the TXT record before giving it to the proc?
     # @yieldparam [Salut::Service] sender a reference to self
     # @yieldparam [NSData] data the new TXT record
-    # @return [nil]
     def netService sender, didUpdateTXTRecordData:data
       @delegates[__method__].call self, data if @delegates[__method__]
       Salut.log.info "Updated TXT record for service (#{sender.description})"
     end
 
     # @yieldparam [Salut::Service] sender a reference to self
-    # @return [nil]
     def netServiceDidStop sender
       @advertising = false
       @delegates[__method__].call self if @delegates[__method__]
