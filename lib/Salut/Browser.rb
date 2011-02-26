@@ -56,8 +56,6 @@ module Salut
       end
     end
 
-    # @endgroup
-
 
     # @group Finding domains
 
@@ -67,8 +65,6 @@ module Salut
     end
 
     alias_method :stop_finding_domains, :stop_finding
-
-    # @endgroup
 
 
     # @group Finding services
@@ -81,8 +77,6 @@ module Salut
     end
 
     alias_method :stop_finding_services, :stop_finding
-
-    # @endgroup
 
 
     # @group Delegate methods
@@ -151,8 +145,6 @@ module Salut
       @delegates[__method__].call self if @delegates[__method__]
       Salut.log.info "Done searching (#{sender.description})"
     end
-
-    # @endgroup
 
   end
 

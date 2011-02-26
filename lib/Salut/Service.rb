@@ -62,8 +62,6 @@ module Salut
       end
     end
 
-    # @endgroup
-
 
     # @group Advertising a service
 
@@ -93,8 +91,6 @@ module Salut
       @service = nil
     end
 
-    # @endgroup
-
 
     # @group Working with discovered services
 
@@ -104,8 +100,6 @@ module Salut
       @service.delegate = self
       @service.resolveWithTimeout timeout
     end
-
-    # @endgroup
 
 
     # @group Delegate methods
@@ -164,8 +158,6 @@ module Salut
       @delegates[__method__].call self if @delegates[__method__]
       Salut.log.info "Stopped advertising/resolving service (#{sender.description})"
     end
-
-    # @endgroup
 
   end
 
