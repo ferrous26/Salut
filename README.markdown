@@ -85,6 +85,6 @@ Contributing to Salut
 Copyright
 =========
 
-Copyright (c) 2010 Mark Rada. See LICENSE.txt for
+Copyright (c) 2010-2011 Mark Rada. See LICENSE.txt for
 further details.
 
