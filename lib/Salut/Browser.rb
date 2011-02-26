@@ -83,7 +83,7 @@ module Salut
     # @todo find a way to use default arguments
     # @param [String] service_name
     # @param [String] domain_name
-    def find_services service_type, in_domain:domain_name
+    def find_services service_type, domain_name = ''
       @browser.searchForServicesOfType service_type, inDomain:domain_name
     end
 
