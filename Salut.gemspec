@@ -31,7 +31,6 @@ Uses the Objective-C NetService classes to advertise and discover services on th
                         'README.markdown'
                        ]
 
-  s.add_development_dependency 'rake',      ['~> 0.8.7']
   s.add_development_dependency 'yard',      ['~> 0.6.4']
   s.add_development_dependency 'bluecloth', ['~> 2.0.11']
   s.add_development_dependency 'mac_bacon', ['~> 1.1.21']
