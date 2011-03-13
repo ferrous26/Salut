@@ -4,6 +4,7 @@ require   'logger'
 
 require   'Salut/Service'
 require   'Salut/Browser'
+require   'Salut/Version'
 
 # A class to help with advertising services using Bonjour and finding
 # other services that are being advertised using Bonjour.

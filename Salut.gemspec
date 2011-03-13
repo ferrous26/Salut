@@ -1,6 +1,9 @@
+$LOAD_PATH.unshift File.join( File.dirname(__FILE__), 'lib' )
+require 'Salut/Version'
+
 Gem::Specification.new do |s|
   s.name    = 'Salut'
-  s.version = '0.4.0'
+  s.version = Salut::VERSION
 
   s.required_rubygems_version = Gem::Requirement.new('>= 1.4.2')
   s.rubygems_version          = '1.4.2'
