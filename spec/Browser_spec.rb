@@ -1,4 +1,4 @@
-require './spec_helper'
+require 'spec_helper'
 
 describe Salut::Browser do
   before do
@@ -13,19 +13,19 @@ describe Salut::Browser do
 
     it 'should be false after I stop searching' do
       @browser.find_services '_ssh._tcp.'
-      run_run_loop 1
+      run_run_loop
       @browser.searching?.should.be.equal true
 
       @browser.stop_finding_services
-      run_run_loop 1
+      run_run_loop
       @browser.searching?.should.be.equal false
 
       @browser.find_browsable_domains
-      run_run_loop 1
+      run_run_loop
       @browser.searching?.should.be.equal true
 
       @browser.stop_finding_domains
-      run_run_loop 1
+      run_run_loop
       @browser.searching?.should.be.equal false
     end
 
@@ -42,7 +42,7 @@ describe Salut::Browser do
       @browser.searching?.should.be.equal true
 
       @browser.stop_finding_services
-      run_run_loop 1
+      run_run_loop
       @browser.searching?.should.be.equal false
 
       @browser.find_browsable_domains

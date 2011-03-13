@@ -9,6 +9,6 @@ require 'Salut'
 # A macro for forcing the run loop to run. This is a blocking
 # operation.
 # @param [Fixnum] time number of seconds to run the current run loop
-def run_run_loop time = 2
+def run_run_loop time = 1
   NSRunLoop.currentRunLoop.runUntilDate (Time.now + time)
 end

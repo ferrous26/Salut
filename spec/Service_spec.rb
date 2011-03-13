@@ -1,4 +1,4 @@
-require './spec_helper'
+require 'spec_helper'
 
 describe Salut::Service do
   before do
@@ -78,7 +78,7 @@ describe Salut::Service do
     it 'will be set to nil when advertising stops' do
       @service.service.should.be.equal nil
       @service.start_advertising
-      run_run_loop 5
+      run_run_loop 2
       @service.stop_advertising
       @service.service.should.be.equal nil
     end
@@ -518,7 +518,7 @@ describe Salut::Service do
     describe '#netServiceDidStop' do
       before do
         @service.start_advertising
-        run_run_loop 1
+        run_run_loop
       end
 
       it 'should call its proc if exists' do
