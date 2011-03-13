@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version = Salut::VERSION
 
   s.required_rubygems_version = Gem::Requirement.new('>= 1.4.2')
-  s.rubygems_version          = '1.4.2'
+  s.rubygems_version          = Gem::VERSION
 
   s.summary       = 'A simple example of using Bonjour with MacRuby'
   s.description   =<<-EOS
