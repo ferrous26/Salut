@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'spec/spec_helper'
 
 describe Salut::Service do
   before do
