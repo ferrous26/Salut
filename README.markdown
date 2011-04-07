@@ -70,6 +70,7 @@ TODO for 1.0
 
 - Monitoring and TXT record stuff
 - publishWithOptions default argument
+- implement a mapping for Hot Cocoa
 
 Contributing to Salut
 =====================
