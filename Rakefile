@@ -12,16 +12,13 @@ end
 require 'yard'
 YARD::Rake::YardocTask.new
 
-namespace :gem do
+require 'rubygems/builder'
+require 'rubygems/installer'
+spec = Gem::Specification.load('Salut.gemspec')
 
-  desc 'Build the gem'
-  task :build do
-    puts `gem build -v Salut.gemspec`
-  end
+desc 'Build the gem'
+task :build do Gem::Builder.new(spec).build end
 
-  desc 'Install the gem in the current directory with the highest version number'
-  task :install => :build do
-    puts `gem install #{Dir.glob('*.gem').sort.reverse.first}`
-  end
+desc 'Build the gem and install it'
+task :install => :build do Gem::Installer.new(spec.file_name).install end
 
-end
